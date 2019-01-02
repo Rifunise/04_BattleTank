@@ -3,7 +3,9 @@
 #include "TankPlayerConroller.h"
 #include "BattleTank.h"
 
-
+/*
+	returns the name of the human controlled tank if found
+*/
 void ATankPlayerConroller::BeginPlay()
 {
 	Super::BeginPlay();
@@ -17,10 +19,13 @@ void ATankPlayerConroller::BeginPlay()
 	{
 		UE_LOG(LogTemp, Warning, TEXT("PlayerController possessing: %s"), *(ControlledTank->GetName() ));
 	}
-}
+}//end BeginPlay
 
+/*
+	Returns the human controlled tank
+*/
 ATank* ATankPlayerConroller::GetControlledTank() const
 {
 	return Cast<ATank>(GetPawn());
-}
+}//end GetControlledTank
 
