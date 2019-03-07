@@ -17,9 +17,18 @@ void ATankPlayerConroller::BeginPlay()
 	}
 	else
 	{
-		UE_LOG(LogTemp, Warning, TEXT("PlayerController possessing: %s"), *(ControlledTank->GetName() ));
+		UE_LOG(LogTemp, Warning, TEXT("PlayerController possessing: %s"), *(ControlledTank->GetName()));
 	}
 }//end BeginPlay
+
+// Called every frame
+void ATankPlayerConroller::Tick(float DeltaTime)
+{
+	Super::Tick( DeltaTime );
+	AimTowardsCrosshair();
+
+}//end Tick
+
 
 /*
 	Returns the human controlled tank
@@ -28,4 +37,23 @@ ATank* ATankPlayerConroller::GetControlledTank() const
 {
 	return Cast<ATank>(GetPawn());
 }//end GetControlledTank
+
+void ATankPlayerConroller::AimTowardsCrosshair()
+{
+	if (!GetControlledTank()) { return; }
+
+	FVector HitLocation; // Out parameter
+	if (GetSightRayHitLocation(HitLocation)) //Has "side-effect", is going to line trace
+	{
+		UE_LOG(LogTemp, Warning, TEXT("HitLocation: %s"), *HitLocation.ToString());
+			//TODO Tell controlled tank to aim at this point
+	}
+}
+
+// Get world location of linetrace through crosshair, true if it hits landscape
+bool ATankPlayerConroller::GetSightRayHitLocation(FVector& HitLocation) const
+{
+	HitLocation = FVector(1.0);
+	return true;
+}
 
